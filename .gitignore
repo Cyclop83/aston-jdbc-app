@@ -40,3 +40,4 @@ build/
 out
 src/main/generated
 logs
+bin
