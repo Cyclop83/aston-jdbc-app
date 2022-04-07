@@ -1,5 +1,7 @@
 package project.model;
 
+import java.util.Objects;
+
 public class Student {
 
   private Long id;
@@ -33,5 +35,22 @@ public class Student {
   public void setLastName(String lastName) {
     this.lastName = lastName;
   }
-  
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Student)) {
+      return false;
+    }
+    Student student = (Student) o;
+    return Objects.equals(id, student.id) && Objects.equals(firstName, student.firstName)
+        && Objects.equals(lastName, student.lastName);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, firstName, lastName);
+  }
 }
