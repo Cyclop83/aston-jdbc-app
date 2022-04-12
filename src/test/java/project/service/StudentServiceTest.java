@@ -1,5 +1,6 @@
 package project.service;
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -43,8 +44,22 @@ public class StudentServiceTest {
   }
 
   @Test
-  void getAllStudyClassesByStudentId_ShouldThrowException_WhenInvalidIdProvided() {
+  void getAllStudyClassesByStudentId_ShouldThrowException_WhenInvalidIdTypeProvided() {
     Assertions.assertThrows(WebAppException.class, () -> studentService.getAllStudyClassesByStudentId("qwerty"));
+  }
+
+  @Test
+  void deleteStudentById_ShouldDeleteStudent_WhenValidIdProvided() {
+    doNothing().when(studentDaoMock).deleteStudent(1L);
+
+    studentService.deleteStudentById("1");
+
+    verify(studentDaoMock).deleteStudent(1L);
+  }
+
+  @Test
+  void deleteStudentById_ShouldThrowException_WhenInvalidIdTypeProvided() {
+    Assertions.assertThrows(WebAppException.class, () -> studentService.deleteStudentById("qwerty"));
   }
 
   private static List<StudyClass> populateStudyClassList() {

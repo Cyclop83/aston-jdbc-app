@@ -10,7 +10,7 @@
   <packaging>war</packaging>
 
   <properties>
-    <java.version>8</java.version>
+    <java.version>11</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <servlet.version>4.0.1</servlet.version>
     <postgresql.version>42.3.3</postgresql.version>

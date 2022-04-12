@@ -19,6 +19,8 @@ public class StudentDao {
   private static final String ADD_STUDENT = "INSERT INTO student (student_id, first_name, last_name) "
       + "VALUES (nextval('student_seq'), ?, ?)";
 
+  private static final String DELETE_STUDENT = "DELETE FROM student WHERE student_id = ?";
+
   private static final String GET_ALL_CLASSES = "SELECT classes.class_id, classes.class_name FROM student "
       + "JOIN student_classes ON student.student_id = student_classes.student_id "
       + "JOIN classes ON student_classes.class_id = classes.class_id "
@@ -30,10 +32,23 @@ public class StudentDao {
   private StudentDao() {
   }
 
+  /**
+   * This method returns the INSTANCE object of StudentDao class.
+   *
+   * @return
+   */
   public static StudentDao getInstance() {
     return INSTANCE;
   }
 
+  /**
+   * This method adds Student with the given firstName and lastName to the student table and returns ID of the added
+   * record.
+   *
+   * @param firstName
+   * @param lastName
+   * @return
+   */
   public Long addStudent(String firstName, String lastName) {
     try (Connection connection = HikariCPDataSource.getConnection()) {
       connection.setAutoCommit(false);
@@ -54,6 +69,31 @@ public class StudentDao {
     }
   }
 
+  /**
+   * This method deletes record with the provided id from the student table.
+   *
+   * @param id
+   */
+  public void deleteStudent(Long id) {
+    try (Connection connection = HikariCPDataSource.getConnection()) {
+      connection.setAutoCommit(false);
+      connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+      PreparedStatement preparedStatement = connection.prepareStatement(DELETE_STUDENT);
+      preparedStatement.setObject(1, id);
+      preparedStatement.executeUpdate();
+      connection.commit();
+    } catch (SQLException e) {
+      throw new WebAppException("Student deletion wasn't finished.");
+    }
+  }
+
+  /**
+   * This method returns list of StudyClass objects, related to the student with the provided id. It also adds
+   * information about this request to the request_log table in the same transaction.
+   *
+   * @param id
+   * @return
+   */
   public List<StudyClass> getAllClassesAndSaveLog(Long id) {
     try (Connection connection = HikariCPDataSource.getConnection()) {
       connection.setAutoCommit(false);

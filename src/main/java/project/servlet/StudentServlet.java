@@ -14,12 +14,29 @@ public class StudentServlet extends HttpServlet {
 
   private StudentService studentService = StudentService.getInstance();
 
+  /**
+   * This method allows a user to move to the student.jsp page.
+   *
+   * @param request
+   * @param response
+   * @throws ServletException
+   * @throws IOException
+   */
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/student.jsp");
     requestDispatcher.forward(request, response);
   }
 
+  /**
+   * This method allows a user to add student to the student table by providing first name and last name in the request,
+   * and returns registered student id in response object.
+   *
+   * @param request
+   * @param response
+   * @throws ServletException
+   * @throws IOException
+   */
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/student.jsp");

@@ -9,13 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import project.service.StudentService;
 
-@WebServlet("/student_class")
-public class StudyClassServlet extends HttpServlet {
+@WebServlet("/student_delete")
+public class StudentDeleteServlet extends HttpServlet {
 
   private StudentService studentService = StudentService.getInstance();
 
   /**
-   * This method allows a user to move to the student_class.jsp page.
+   * This method allows a user to move to the student_delete.jsp page.
    *
    * @param request
    * @param response
@@ -24,13 +24,13 @@ public class StudyClassServlet extends HttpServlet {
    */
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/student_class.jsp");
+    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/student_delete.jsp");
     requestDispatcher.forward(request, response);
   }
 
   /**
-   * This method allows a user to get a List of StudyClass objects, related to the given student ID. Request object
-   * provides provides ID, response contains List<StudyClass></>
+   * This method allows a user to delete student record by providing his ID in the request and returns message in the
+   * response.
    *
    * @param request
    * @param response
@@ -39,8 +39,9 @@ public class StudyClassServlet extends HttpServlet {
    */
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/student_class.jsp");
-    request.setAttribute("classes", studentService.getAllStudyClassesByStudentId(request.getParameter("student_id")));
+    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/student_delete.jsp");
+    studentService.deleteStudentById(request.getParameter("student_id"));
+    request.setAttribute("message", "Record was successfully deleted.");
     requestDispatcher.forward(request, response);
   }
 }

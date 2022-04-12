@@ -17,7 +17,13 @@ public class HikariCPDataSource {
     config.setDriverClassName("org.postgresql.Driver");
     dataSource = new HikariDataSource(config);
   }
-  
+
+  /**
+   * This method returns connection to the database, provided by the Hikari DataSource.
+   *
+   * @return
+   * @throws SQLException
+   */
   public static Connection getConnection() throws SQLException {
     return dataSource.getConnection();
   }
