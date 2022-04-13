@@ -21,6 +21,7 @@
     <hikari-cp.version>5.0.0</hikari-cp.version>
     <apache.httpclient.version>4.5.13</apache.httpclient.version>
     <apache.httpcore.version>4.4.15</apache.httpcore.version>
+    <hibernate.core.version>6.0.0.Final</hibernate.core.version>
 
     <junit.version>5.8.2</junit.version>
     <mockito.version>4.3.1</mockito.version>
@@ -99,6 +100,12 @@
       <artifactId>jstl</artifactId>
       <version>${jstl.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>${hibernate.core.version}</version>
+    </dependency>
+
   </dependencies>
 
 

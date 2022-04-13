@@ -1,11 +1,25 @@
 package project.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import java.util.Objects;
 
+@Entity
+@Table(name = "classes")
 public class StudyClass {
 
+  @Id
+  @SequenceGenerator(name = "classSequence", sequenceName = "classes_seq", allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "classSequence")
+  @Column(name = "class_id")
   private Long id;
 
+  @Column(name = "class_name")
   private String className;
 
   public StudyClass() {

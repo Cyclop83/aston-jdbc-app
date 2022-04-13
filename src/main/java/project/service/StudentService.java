@@ -3,11 +3,11 @@ package project.service;
 import java.util.List;
 import project.dao.StudentDao;
 import project.exception.WebAppException;
+import project.model.Student;
 import project.model.StudyClass;
 
 public class StudentService {
 
-  private static final StudentService INSTANCE = new StudentService();
   private StudentDao studentDao = StudentDao.getInstance();
 
   private StudentService() {
@@ -19,7 +19,7 @@ public class StudentService {
    * @return
    */
   public static StudentService getInstance() {
-    return INSTANCE;
+    return ThreadSafeSingleton.INSTANCE;
   }
 
   /**
@@ -30,7 +30,10 @@ public class StudentService {
    * @return
    */
   public Long addStudent(String firstName, String lastName) {
-    return studentDao.addStudent(firstName, lastName);
+    Student student = new Student();
+    student.setFirstName(firstName);
+    student.setLastName(lastName);
+    return studentDao.addStudent(student);
   }
 
   /**
@@ -62,5 +65,10 @@ public class StudentService {
     } catch (NumberFormatException e) {
       throw new WebAppException("Id value is incorrect");
     }
+  }
+
+  private static class ThreadSafeSingleton {
+
+    private static final StudentService INSTANCE = new StudentService();
   }
 }

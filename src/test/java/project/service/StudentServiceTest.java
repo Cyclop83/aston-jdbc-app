@@ -1,5 +1,6 @@
 package project.service;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -14,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import project.dao.StudentDao;
 import project.exception.WebAppException;
+import project.model.Student;
 import project.model.StudyClass;
 
 @ExtendWith(MockitoExtension.class)
@@ -27,11 +29,11 @@ public class StudentServiceTest {
 
   @Test
   void addStudent_ShouldReturnId_WhenValidArgumentsProvided() {
-    when(studentDaoMock.addStudent("Ivan", "Petrov")).thenReturn(1L);
+    when(studentDaoMock.addStudent(any(Student.class))).thenReturn(1L);
 
     studentService.addStudent("Ivan", "Petrov");
 
-    verify(studentDaoMock).addStudent("Ivan", "Petrov");
+    verify(studentDaoMock).addStudent(any(Student.class));
   }
 
   @Test
