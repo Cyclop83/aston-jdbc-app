@@ -1,0 +1,52 @@
+CREATE TABLE student (
+	student_id BIGINT NOT NULL,
+	first_name VARCHAR,
+	last_name VARCHAR,
+	CONSTRAINT student_pkey PRIMARY KEY (student_id)
+);
+
+CREATE SEQUENCE student_seq
+  start 1
+  increment 1;
+  
+CREATE TABLE classes (
+  class_id BIGINT NOT NULL,
+  class_name VARCHAR,
+  CONSTRAINT class_pkey PRIMARY KEY (class_id)
+);
+
+CREATE SEQUENCE class_seq
+  start 1
+  increment 1;
+  
+INSERT INTO classes (class_id, class_name)
+VALUES (nextval('class_seq'), 'Math');
+
+CREATE TABLE student_classes (
+	student_id BIGINT NOT NULL,
+	class_id BIGINT,
+	CONSTRAINT student_classes_pkey PRIMARY KEY (student_id, class_id),
+	CONSTRAINT student_fkey FOREIGN KEY (student_id) 
+	REFERENCES student (student_id)
+	ON UPDATE RESTRICT
+    ON DELETE CASCADE,
+	CONSTRAINT class_fkey FOREIGN KEY (class_id) 
+	REFERENCES classes (class_id)
+	ON UPDATE RESTRICT
+    ON DELETE CASCADE
+);
+
+CREATE TABLE request_log (
+	request_id BIGINT NOT NULL,
+	student_id BIGINT,
+	request_time TIMESTAMP,
+	CONSTRAINT request_pkey PRIMARY KEY (request_id),
+	CONSTRAINT request_fkey FOREIGN KEY (student_id)
+	REFERENCES student (student_id)
+	ON UPDATE RESTRICT
+    ON DELETE CASCADE
+);
+
+CREATE SEQUENCE request_seq
+  start 1
+  increment 1;
